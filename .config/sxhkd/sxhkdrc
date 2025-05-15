@@ -11,15 +11,15 @@ alt + x
 
 # terminal emulator
 super + Return
-	alacritty
+    $TERMINAL
 
 # program launcher
 super + space
-	dmenu_run
+    dmenu_run
 
 # launch browser
 super + w
-  thorium-browser
+    $BROWSER
 
 # launch outlook
 alt + o
