@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Mail
+Exec=/usr/bin/xdg-open "https://app.fastmail.com/mail/"
