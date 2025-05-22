@@ -17,10 +17,8 @@ lock(){
     mpc pause
     pauseallmpv
     wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-    kill -44 $(pidof polybar)
     slock
     wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-    kill -44 $(pidof polybar)
 }
 
 case "$(printf "🔒 lock\n🚪 leave $WM\n♻️ renew $WM\n🐻 hibernate\n🔃 reboot\n🖥️shutdown\n💤 sleep\n📺 display off" | dmenu -i -p 'Action: ')" in
