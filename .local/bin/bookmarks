@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# my bookmarks file is formatted in such a way that it looks nice
+# when rendered with markdown, so links are in the format [txt](link).
+# This file parses that format and passes each bookmark to wmenu or dmenu
+# for picking out and opening a bookmark.
+
+count=1
+declare -a bookmarks=()
+bookmarks_file="$HOME/Documents/bookmarks.md"
+temp_file="/tmp/bookmarks_tmp.txt"
+touch "$temp_file"
+
+while read -r line; do
+    if [[ -n "$line" ]]; then
+        echo "$count: $(echo $line | sed -nE 's/^\[(.*)\].*/\1/p')" >> "$temp_file"
+        temp="$(echo $line | sed -nE 's/^\[.*\]\((.*)\)/\1/p')"
+        bookmarks+=("$temp")
+        (( count += 1 ))
+    fi
+done < "$bookmarks_file"
+
+[[ $XDG_SESSION_TYPE == 'x11' ]] && menu=$(which dmenu) || menu=$(which wmenu)
+output=$(cat "$temp_file" | $menu -i)
+rm "$temp_file"
+tmp=$(echo $output | sed -E 's/:.*//')
+(( tmp -= 1 ))
+
+xdg-open "${bookmarks[$tmp]}" & disown

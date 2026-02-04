@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# A dmenu wrapper script for system functions.
+case "$(printf "󰌾 lock\n󰍃 logout\n reboot\n󰐥 shutdown\n󰤄 sleep\n󰶐 display off" | wmenu -i -p 'Action: ')" in
+	'󰌾 lock') swaylock;;
+	'󰍃 logout') swaymsg exit ;;
+	'󰤄 sleep') systemctl suspend ;;
+	' reboot') systemctl reboot ;;
+	'󰐥 shutdown') systemctl poweroff ;;
+	'󰶐 display off') xset dpms force off ;;
+	*) exit 1 ;;
+esac
