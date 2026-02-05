@@ -53,9 +53,8 @@ set $laptop eDP-1
 output $laptop scale 1.75 pos 0 0
 output DP-2 scale 1.5
 
-bindswitch --reload --locked lid:on output $laptop disable
-bindswitch --reload --locked lid:off output $laptop enable
-exec_always '$HOME/.local/bin/sway-lidswitch.sh'
+bindswitch --locked lid:on output $laptop disable
+bindswitch --locked lid:off output $laptop enable
 
 ### Idle configuration
 #
@@ -69,8 +68,9 @@ exec_always '$HOME/.local/bin/sway-lidswitch.sh'
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
-exec swayidle -w \
-        before-sleep 'swaylock -f'
+# exec swayidle -w \
+#         before-sleep 'swaylock -f'
+exec swayidle -w before-sleep 'swaylock -f' after-resume 'swaymsg output eDP-1 enable; swaymsg output * dpms on'
 
 ### Input configuration
 #
