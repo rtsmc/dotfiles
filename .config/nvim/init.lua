@@ -155,6 +155,7 @@ require("lazy").setup({
                 }
             }
         },
+        { 'folke/zen-mode.nvim' },
         { 'nvim-treesitter/nvim-treesitter' },
         { 'mfussenegger/nvim-dap' },
         { 'neovim/nvim-lspconfig' },
