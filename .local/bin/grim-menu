@@ -7,7 +7,7 @@
 # variables
 output="$(date '+%y%m%d-%H%M-%S').png"
 
-case "$(printf "a selected area\\ncurrent window\\nfull screen\\na selected area (copy)\\ncurrent window (copy)\\nfull screen (copy)\\ncopy selected image to text" | bemenu -l 7 -i -p "Screenshot which area?")" in
+case "$(printf "a selected area\\nfull screen\\na selected area (copy)\\nfull screen (copy)\\ncopy selected image to text" | rofi -dmenu -l 7 -i -p "Screenshot which area?")" in
     "a selected area") grim -g "$(slurp)" pic-selected-"${output}" ;;
     "full screen") grim pic-full-"${output}" ;;
     "a selected area (copy)") grim -g "$(slurp)" - | wl-copy ;;

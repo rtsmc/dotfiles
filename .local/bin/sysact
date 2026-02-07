@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# A dmenu wrapper script for system functions.
-case "$(printf "󰌾 lock\n󰍃 logout\n reboot\n󰐥 shutdown\n󰤄 sleep\n󰶐 display off" | wmenu -i -p 'Action: ')" in
+# A (rofi) dmenu wrapper script for system functions.
+case "$(printf "󰌾 lock\n󰍃 logout\n reboot\n󰐥 shutdown\n󰤄 sleep\n󰶐 display off" | rofi -dmenu -i -p 'Action: ')" in
 	'󰌾 lock') swaylock;;
 	'󰍃 logout') swaymsg exit ;;
 	'󰤄 sleep') systemctl suspend ;;

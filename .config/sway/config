@@ -15,11 +15,11 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term alacritty
-set $browser firefox
+set $browser brave
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu bemenu-run -i
+set $menu rofi -show drun
 
 font pango:monospace 10
 
@@ -55,6 +55,9 @@ output DP-2 scale 1.5
 
 bindswitch --locked lid:on output $laptop disable
 bindswitch --locked lid:off output $laptop enable
+
+# Autostart applications
+exec dex -a
 
 ### Idle configuration
 #
@@ -109,7 +112,6 @@ bindsym $mod+Shift+s exec grim-menu
 exec_always {
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 }
 
 # Make Thunar file operation progress dialogs floating
@@ -124,6 +126,11 @@ for_window [app_id="thunar" title=".*Properties.*"] floating enable
 # Make Thunar rename dialogs floating
 for_window [app_id="thunar" title=".*Rename.*"] floating enable
 
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="dialog"] floating enable
+
 ### Key bindings
 #
 # Basics:
@@ -134,7 +141,7 @@ for_window [app_id="thunar" title=".*Rename.*"] floating enable
     # Start browser
     bindsym Mod1+b exec --no-startup-id $HOME/.local/bin/bookmarks
     bindsym $mod+BackSpace exec $HOME/.local/bin/sysact
-    bindsym Mod1+w exec --no-startup-id pgrep 'firefox' && swaymsg '[app_id="firefox"] focus' || $browser
+    bindsym Mod1+w exec --no-startup-id pgrep 'brave' && swaymsg '[app_id="brave-browser"] focus' || $browser
     bindsym Mod1+s exec --no-startup-id pgrep 'spotify' && swaymsg '[app_id="spotify"] focus' || spotify-launcher
     bindsym Mod1+a exec --no-startup-id pgrep 'alacritty' && swaymsg '[app_id="Alacritty"] focus' || alacritty
     bindsym Mod1+e exec --no-startup-id pgrep 'thunar' && swaymsg '[app_id="thunar"] focus' || thunar
@@ -302,18 +309,20 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    position bottom
+    swaybar_command waybar
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command exec i3status
-    font 'CaskaydiaMono Nerd Font 10'
-
-    # colors {
-    #     statusline #ffffff
-    #     background #323232
-    #     inactive_workspace #32323200 #32323200 #5c5c5c
-    # }
+    # position bottom
+    #
+    # # When the status_command prints a new line to stdout, swaybar updates.
+    # # The default just shows the current date and time.
+    # status_command exec i3status
+    # font 'monospace 10'
+    #
+    # # colors {
+    # #     statusline #ffffff
+    # #     background #323232
+    # #     inactive_workspace #32323200 #32323200 #5c5c5c
+    # # }
 }
 
 include /etc/sway/config.d/*
