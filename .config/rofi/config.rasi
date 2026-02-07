@@ -1,0 +1,5 @@
+configuration {
+    display-drun: "Launch...";
+    show-icons: true;
+}
+@theme "~/.config/rofi/kanagawa.rasi"

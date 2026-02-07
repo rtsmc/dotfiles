@@ -1,0 +1,117 @@
+/** Kanagawa Omarchy-like launcher (optimized + fixed) **/
+
+* {
+    /* Palette vars */
+    fg:            #DCD7BA;   /* fujiWhite */
+    bg:            #181818;   /* sumiInk1 */
+    border-accent: #7E9CD8;   /* waveBlue2 */
+    select-bg:     #223249;   /* waveBlue1 */
+    dim-fg:        #727169;   /* fujiGray */
+    header-fg:     #9CABCA;   /* springViolet2 */
+    row-fg:        #C8C093;   /* oldWhite */
+
+    font: "BlexMono Nerd Font Mono 12";
+    text-color: @fg;
+
+    /* Key fix: give every widget a dark base background
+       so any unstyled widget won't be bright/white. */
+    background-color: @bg;
+}
+
+/* Main window: tall centered column */
+window {
+    location: center;
+    anchor:   center;
+
+    fullscreen: false;
+    width:  32%;
+    height: 80%;
+
+    padding: 0px 0px;
+    border: 2px;
+    border-color: @border-accent;
+}
+
+/* Container box */
+mainbox {
+    spacing: 20px;
+    padding: 20px 40px;
+    background-color: @bg;
+    border-radius: 10px;
+}
+
+/* Header “Launch…” and input */
+prompt {
+    enabled: true;
+    padding: 0 0 10px 0;
+    text-color: @header-fg;
+    font: "BlexMono Nerd Font Bold 14";
+}
+
+inputbar {
+    children: [prompt, entry];
+    spacing: 15px;
+    padding: 10px 0 18px 0;
+    border: 0 0 1px 0;
+    border-color: #363646;        /* sumiInk3 */
+    background-color: transparent;
+}
+
+entry {
+    expand: true;
+    padding: 4px 8px;
+    background-color: transparent;
+    text-color: @fg;
+    placeholder: "Search…";
+}
+
+/* App / script options list */
+listview {
+    columns: 1;
+    spacing: 4px;
+    fixed-height: true;
+    dynamic: true;
+    scrollbar: false;
+    background-color: transparent;
+}
+
+/* Rows */
+element {
+    padding: 4px 10px;
+    border-radius: 6px;
+    background-color: @bg;
+    text-color: @row-fg;
+}
+
+element-icon {
+    size: 28px;
+    padding: 0 12px 0 0;
+    background-color: inherit;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: inherit;
+}
+
+/* Selected row */
+element selected {
+    background-color: @select-bg;
+    text-color: @fg;
+}
+
+element selected element-icon,
+element selected element-text {
+    text-color: @fg;
+}
+
+/* Messages / large text areas used by scripts */
+message {
+    padding: 10px 0 0 0;
+    background-color: transparent;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @dim-fg;
+}
