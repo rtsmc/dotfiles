@@ -1,28 +1,37 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # my bookmarks file is formatted in such a way that it looks nice
 # when rendered with markdown, so links are in the format [txt](link).
 # This file parses that format and passes each bookmark to rofi
 # for picking out and opening a bookmark.
 
-count=1
-declare -a bookmarks=()
 bookmarks_file="$HOME/Documents/bookmarks.md"
-temp_file="/tmp/bookmarks_tmp.txt"
-touch "$temp_file"
 
-while read -r line; do
-    if [[ -n "$line" ]]; then
-        echo "$count: $(echo $line | sed -nE 's/^\[(.*)\].*/\1/p')" >> "$temp_file"
-        temp="$(echo $line | sed -nE 's/^\[.*\]\((.*)\)/\1/p')"
-        bookmarks+=("$temp")
-        (( count += 1 ))
+labels=()
+urls=()
+
+re_link='^\[([^]]+)\]\(([^)]+)\)$'
+
+# Parse [text](url) lines into two arrays
+while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    if [[ "$line" =~ $re_link ]]; then
+        labels+=("${BASH_REMATCH[1]}")
+        urls+=("${BASH_REMATCH[2]}")
     fi
 done < "$bookmarks_file"
 
-output=$(cat "$temp_file" | $(which rofi) -dmenu -i)
-rm "$temp_file"
-tmp=$(echo $output | sed -E 's/:.*//')
-(( tmp -= 1 ))
+# Build menu (1-based index for display)
+menu=""
+for i in "${!labels[@]}"; do
+    menu+="$((i + 1)): ${labels[i]}"$'\n'
+done
 
-xdg-open "${bookmarks[$tmp]}" & disown
+# Show menu in rofi; disable icons for speed
+choice=$(printf '%s' "$menu" | rofi -dmenu -no-show-icons -i -p "Bookmarks")
+[[ -z "$choice" ]] && exit 0
+
+index=${choice%%:*}
+(( index-- ))
+
+xdg-open "${urls[index]}" >/dev/null 2>&1 & disown

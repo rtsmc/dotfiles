@@ -70,7 +70,7 @@ listview {
     columns: 1;
     spacing: 4px;
     fixed-height: true;
-    dynamic: true;
+    dynamic: false;
     scrollbar: false;
     background-color: transparent;
 }

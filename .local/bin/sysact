@@ -1,12 +1,18 @@
 #!/bin/sh
 
 # A (rofi) dmenu wrapper script for system functions.
-case "$(printf "󰌾 lock\n󰍃 logout\n reboot\n󰐥 shutdown\n󰤄 sleep\n󰶐 display off" | rofi -dmenu -i -p 'Action: ')" in
-	'󰌾 lock') swaylock;;
-	'󰍃 logout') swaymsg exit ;;
-	'󰤄 sleep') systemctl suspend ;;
-	' reboot') systemctl reboot ;;
-	'󰐥 shutdown') systemctl poweroff ;;
-	'󰶐 display off') xset dpms force off ;;
-	*) exit 1 ;;
+case $(rofi -dmenu -no-show-icons -i -p 'Action: ' << EOF
+󰌾 lock
+󰍃 logout
+󰤄 sleep
+ reboot
+󰐥 shutdown
+EOF
+) in
+    '󰌾 lock') swaylock;;
+    '󰍃 logout') swaymsg exit ;;
+    '󰤄 sleep') systemctl suspend ;;
+    ' reboot') systemctl reboot ;;
+    '󰐥 shutdown') systemctl poweroff ;;
+    *) exit 1 ;;
 esac

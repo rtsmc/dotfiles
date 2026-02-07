@@ -1,5 +1,8 @@
 configuration {
     display-drun: "Launch...";
     show-icons: true;
+    disable-history: true;
+    sort: true;
+    sorting-method: "fzf";
 }
 @theme "~/.config/rofi/kanagawa.rasi"
