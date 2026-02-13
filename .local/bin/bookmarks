@@ -34,4 +34,4 @@ choice=$(printf '%s' "$menu" | rofi -dmenu -no-show-icons -i -p "Bookmarks")
 index=${choice%%:*}
 (( index-- ))
 
-xdg-open "${urls[index]}" >/dev/null 2>&1 & disown
+xdg-open "${urls[index]}" >/dev/null 2>&1
