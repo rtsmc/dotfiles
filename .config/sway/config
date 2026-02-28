@@ -146,6 +146,7 @@ for_window [window_role="dialog"] floating enable
     bindsym Mod1+a exec --no-startup-id pgrep 'alacritty' && swaymsg '[app_id="Alacritty"] focus' || alacritty
     bindsym Mod1+e exec --no-startup-id pgrep 'thunar' && swaymsg '[app_id="thunar"] focus' || thunar
     bindsym Mod1+z exec --no-startup-id pgrep 'zathura' && swaymsg '[app_id="zathura"] focus' || zathura
+    bindsym Mod1+c exec --no-startup-id pgrep 'code' && swaymsg '[app_id="code"] focus' || code
     bindsym Mod1+o exec --no-startup-id xdg-open 'https://outlook.office.com/mail/'
     bindsym Mod1+r exec --no-startup-id xdg-open 'https://ticktick.com/webapp/#q/week/tasks'
 
