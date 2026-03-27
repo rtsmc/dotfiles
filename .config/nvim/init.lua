@@ -156,6 +156,13 @@ require("lazy").setup({
             }
         },
         { 'folke/zen-mode.nvim' },
+        {
+            'lervag/vimtex',
+            config = function()
+                vim.g.vimtex_view_method = "zathura_simple"
+                vim.g.vimtex_compiler_method = "tectonic"
+            end
+        },
         { 'nvim-treesitter/nvim-treesitter' },
         { 'mfussenegger/nvim-dap' },
         { 'neovim/nvim-lspconfig' },
