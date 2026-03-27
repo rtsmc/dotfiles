@@ -7,10 +7,10 @@
 # variables
 output="$(date '+%y%m%d-%H%M-%S').png"
 
-case "$(printf "a selected area\\nfull screen\\na selected area (copy)\\nfull screen (copy)\\ncopy selected image to text" | rofi -dmenu -l 7 -i -p "Screenshot which area?")" in
+case "$(printf "a selected area (copy)\\na selected area\\nfull screen\\nfull screen (copy)\\ncopy selected image to text" | rofi -dmenu -l 7 -i -p "Screenshot which area?")" in
+    "a selected area (copy)") grim -g "$(slurp)" - | wl-copy ;;
     "a selected area") grim -g "$(slurp)" pic-selected-"${output}" ;;
     "full screen") grim pic-full-"${output}" ;;
-    "a selected area (copy)") grim -g "$(slurp)" - | wl-copy ;;
     "full screen (copy)") grim - | wl-copy ;;
     "copy selected image to text") tmpfile=$(mktemp /tmp/ocr-XXXXXX.png) && grim -g "$(slurp)" "$tmpfile" && tesseract "$tmpfile" - -l eng | wl-copy && rm "$tmpfile" ;;
 esac
