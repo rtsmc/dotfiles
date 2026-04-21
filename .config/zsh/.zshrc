@@ -13,7 +13,7 @@ alias t='tmux'
 alias ta='tmux attach'
 alias la='ls -lah'
 alias l='ls -lh'
-alias open='xdg-open'
+open() { xdg-open "$@" >/dev/null 2>&1 &! }
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 bindkey -v
