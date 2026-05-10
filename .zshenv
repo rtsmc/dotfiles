@@ -9,3 +9,4 @@ export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 
 XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share"
 PATH="$HOME/.local/bin:$PATH"
+. "$HOME/.cargo/env"

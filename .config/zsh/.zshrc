@@ -13,11 +13,17 @@ alias t='tmux'
 alias ta='tmux attach'
 alias la='ls -lah'
 alias l='ls -lh'
+alias va='source .venv/bin/activate'
+alias killbg='kill ${${(v)jobstates##*:*:}%=*}'
 open() { xdg-open "$@" >/dev/null 2>&1 &! }
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 bindkey -v
 export KEYTIMEOUT=1
+
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$XDG_DATA_HOME/npm/bin:$PATH"
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
@@ -62,3 +68,8 @@ dir=''
 PROMPT='%F{blue}%(4~|%-1~/…/%2~|%4~)%f$(git_prompt_info) %(?.%F{green}.%F{red})%#%f '
 
 source <(fzf --zsh)
+
+# bun completions
+[ -s "/home/ryan/.bun/_bun" ] && source "/home/ryan/.bun/_bun"
+
+. "$HOME/.local/share/../bin/env"
