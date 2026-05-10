@@ -15,8 +15,7 @@ vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 -- other
-vim.o.wrap = false
-vim.o.hlsearch = false
+vim.o.wrap = false vim.o.hlsearch = false
 vim.o.incsearch = true
 vim.o.scrolloff = 8
 vim.o.clipboard = "unnamedplus"
@@ -24,6 +23,9 @@ vim.o.winborder = "rounded"
 vim.o.signcolumn = "yes"
 vim.o.cursorline = true
 vim.o.cursorline = true
+
+vim.o.termguicolors = true
+vim.o.cursorcolumn = false
 
 -- built in terminal settings
 vim.api.nvim_create_autocmd('TermOpen', {
@@ -92,24 +94,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
-        {
-            'rebelot/kanagawa.nvim',
-            opts = {
-                compile = true,
-                undercurl = true,
-                colors = {
-                    palette = {
-                        sumiInk0 = "#1c1c1d",
-                        sumiInk1 = "#181818",
-                        sumiInk2 = "#181818",
-                        sumiInk3 = "#181818",
-                        sumiInk4 = "#282828",
-                        sumiInk5 = "#343434",
-                        sumiInk6 = "#68686b"
-                    }
-                },
-            }
-        },
+        { import = "plugins" },
         { 'nvim-mini/mini.icons' },
         { 'nvim-mini/mini.pick' },
         {
@@ -163,7 +148,6 @@ require("lazy").setup({
                 vim.g.vimtex_compiler_method = "tectonic"
             end
         },
-        { 'nvim-treesitter/nvim-treesitter' },
         { 'mfussenegger/nvim-dap' },
         { 'neovim/nvim-lspconfig' },
     },
@@ -177,7 +161,6 @@ require("lazy").setup({
 vim.cmd.colorscheme "kanagawa"
 
 require "mini.pick".setup()
--- require "nvim-treesitter.configs".setup()
 
 require 'diagflow'.setup()
 vim.diagnostic.config({
@@ -218,7 +201,7 @@ dap.configurations.c = {
 ----------------------------------------------------------------------------------
 -- Langugae Servers
 ----------------------------------------------------------------------------------
-vim.lsp.enable({ "lua_ls", "clangd", "basedpyright", "ruff", "racket_langserver", "vtsls" })
+vim.lsp.enable({ "lua_ls", "clangd", "basedpyright", "ruff", "racket_langserver", "vtsls", "rust_analyzer" })
 
 vim.lsp.config("basedpyright", {
     settings = {
