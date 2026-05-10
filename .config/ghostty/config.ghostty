@@ -1,0 +1,33 @@
+gtk-single-instance = true
+window-theme = dark
+shell-integration = none
+
+background = #181818
+foreground = #e4e4e4
+
+palette = 0=#2a2a37
+palette = 1=#ec5255
+palette = 2=#7ab063
+palette = 3=#d9b165
+palette = 4=#7da6f9
+palette = 5=#ad8ae2
+palette = 6=#60b09c
+palette = 7=#e4e4e4
+
+palette = 8=#96958b
+palette = 9=#fb6155
+palette = 10=#8ccc70
+palette = 11=#f3c672
+palette = 12=#80bdfb
+palette = 13=#c09df6
+palette = 14=#6fc3b4
+palette = 15=#f2f2f2
+
+selection-background = #2d4f67
+selection-foreground = #e4e4e4
+
+font-size = 10.5
+adjust-font-baseline = 0
+alpha-blending = linear-corrected
+freetype-load-flags = hinting,autohint,light,no-force-autohint,no-monochrome
+font-feature = -calt, -liga, -dlig
