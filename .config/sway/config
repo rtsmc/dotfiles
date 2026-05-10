@@ -14,7 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty
+set $term ghostty
 set $browser brave
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -52,6 +52,7 @@ set $laptop eDP-1
 
 output $laptop scale 1.5 pos 0 0
 output DP-2 scale 1.5
+# output DP-2 scale 1
 
 bindswitch --locked lid:on output $laptop disable
 bindswitch --locked lid:off output $laptop enable
@@ -101,6 +102,12 @@ input "type:pointer" {
     accel_profile flat
 }
 
+input "type:tablet_tool" {
+    map_to_output DP-2
+    map_from_region 0x0.05 1x0.9
+    tool_mode * absolute
+}
+
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
 exec dunst
@@ -108,6 +115,7 @@ bindsym $mod+Shift+v exec cliphist list | bemenu | cliphist decode | wl-copy
 
 # Screenshot keybind
 bindsym $mod+Shift+s exec grim-menu
+bindsym Mod1+Shift+s exec grim-sel-copy
 
 exec_always --no-startup-id lxqt-policykit-agent
 exec_always {
@@ -147,7 +155,7 @@ for_window [window_role="dialog"] floating enable
     bindsym $mod+BackSpace exec $HOME/.local/bin/sysact
     bindsym Mod1+w exec --no-startup-id pgrep 'brave' && swaymsg '[app_id="brave-browser"] focus' || $browser
     bindsym Mod1+s exec --no-startup-id pgrep 'spotify' && swaymsg '[app_id="spotify"] focus' || spotify-launcher
-    bindsym Mod1+a exec --no-startup-id pgrep 'alacritty' && swaymsg '[app_id="Alacritty"] focus' || alacritty
+    bindsym Mod1+a exec --no-startup-id pgrep 'ghostty' && swaymsg '[app_id="ghostty"] focus' || ghostty
     bindsym Mod1+e exec --no-startup-id pgrep 'thunar' && swaymsg '[app_id="thunar"] focus' || thunar
     bindsym Mod1+z exec --no-startup-id pgrep 'zathura' && swaymsg '[app_id="zathura"] focus' || zathura
     bindsym Mod1+f exec --no-startup-id pgrep 'code' && swaymsg '[app_id="code"] focus' || code
