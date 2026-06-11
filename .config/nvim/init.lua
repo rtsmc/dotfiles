@@ -1,5 +1,3 @@
-require("compile")
-
 ----------------------------------------------------------------------------------
 -- Vim Options
 ----------------------------------------------------------------------------------
@@ -21,7 +19,6 @@ vim.o.scrolloff = 8
 vim.o.clipboard = "unnamedplus"
 vim.o.winborder = "rounded"
 vim.o.signcolumn = "yes"
-vim.o.cursorline = true
 vim.o.cursorline = true
 
 vim.o.termguicolors = true
@@ -45,7 +42,6 @@ vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR>")
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
 vim.keymap.set("n", '<leader>qf', vim.diagnostic.setqflist)
-vim.keymap.set("n", '<leader>r', "<cmd>Compile last<CR>")
 
 -- small terminal
 vim.keymap.set("n", "<space>st", function ()
@@ -74,95 +70,47 @@ vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
 -- Plugins
 ----------------------------------------------------------------------------------
 
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
-end
-vim.opt.rtp:prepend(lazypath)
+vim.g.vimtex_view_method = "zathura_simple"
+vim.g.vimtex_compiler_method = "tectonic"
 
--- Setup lazy.nvim
-require("lazy").setup({
-    spec = {
-        { import = "plugins" },
-        { 'nvim-mini/mini.icons' },
-        { 'nvim-mini/mini.pick' },
-        {
-            'stevearc/oil.nvim',
-            ---@module 'oil'
-            ---@type oil.SetupOpts
-            opts = {},
-            dependencies = { { "nvim-mini/mini.icons", opts = {} } },
-            lazy = false,
-        },
-        {
-            'Saghen/blink.cmp',
-            dependencies = { 'rafamadriz/friendly-snippets' },
-            version = '1.*',
-            opts = {
-                signature = { enabled = true },
-                completion = {
-                    documentation = { auto_show = true, auto_show_delay_ms = 500 },
-                    menu = {
-                        auto_show = true,
-                        draw = {
-                            columns = { { "kind_icon", "label", "label_description", gap = 1 }, { "kind" } },
-                        },
-                    },
-                },
-                sources = {
-                    default = { 'lsp', 'snippets', 'path', 'omni' },
-                }
-            }
-        },
-        { 'OXY2DEV/markview.nvim' },
-        { 'dgagn/diagflow.nvim' },
-        {
-            'folke/snacks.nvim',
-            opts = {
-                indent = {
-                    enabled = true,
-                    filter = function(buf)
-                        local excluded_ft = { "racket" }
-                        return not vim.tbl_contains(excluded_ft, vim.bo[buf].filetype)
-                        and vim.bo[buf].buftype == ""
-                    end,
-                }
-            }
-        },
-        { 'folke/zen-mode.nvim' },
-        {
-            'lervag/vimtex',
-            config = function()
-                vim.g.vimtex_view_method = "zathura_simple"
-                vim.g.vimtex_compiler_method = "tectonic"
-            end
-        },
-        { 'mfussenegger/nvim-dap' },
-        { 'neovim/nvim-lspconfig' },
-    },
-    -- Configure any other settings here. See the documentation for more details.
-    -- colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "kanagawa" } },
-    -- automatically check for plugin updates
-    checker = { enabled = false },
-})
+vim.pack.add({
+    "https://github.com/nvim-mini/mini.icons",
+    "https://github.com/nvim-mini/mini.pick",
+    "https://github.com/stevearc/oil.nvim",
+    "https://github.com/rafamadriz/friendly-snippets",
+    { src = "https://github.com/Saghen/blink.cmp", version = vim.version.range("1") },
+    "https://github.com/OXY2DEV/markview.nvim",
+    "https://github.com/dgagn/diagflow.nvim",
+    "https://github.com/folke/snacks.nvim",
+    "https://github.com/folke/zen-mode.nvim",
+    "https://github.com/lervag/vimtex",
+    "https://github.com/mfussenegger/nvim-dap",
+    "https://github.com/neovim/nvim-lspconfig",
+}, { load = true, confirm = false })
 
 vim.cmd.colorscheme "kanagawa"
 
-require "mini.pick".setup()
+require("mini.icons").setup()
+require("mini.pick").setup()
+require("oil").setup({})
 
-require 'diagflow'.setup()
+require("blink.cmp").setup({
+    signature = { enabled = true },
+    completion = {
+        documentation = { auto_show = true, auto_show_delay_ms = 500 },
+        menu = {
+            auto_show = true,
+            draw = {
+                columns = { { "kind_icon", "label", "label_description", gap = 1 }, { "kind" } },
+            },
+        },
+    },
+    sources = {
+        default = { 'lsp', 'snippets', 'path', 'omni' },
+    }
+})
+
+require("diagflow").setup()
 vim.diagnostic.config({
     signs = {
         text = {
@@ -172,6 +120,36 @@ vim.diagnostic.config({
             [vim.diagnostic.severity.INFO] = '●',
         },
     }
+})
+
+require("snacks").setup({
+    indent = {
+        enabled = true,
+        filter = function(buf)
+            local excluded_ft = { "racket" }
+            return not vim.tbl_contains(excluded_ft, vim.bo[buf].filetype)
+            and vim.bo[buf].buftype == ""
+        end,
+    }
+})
+
+----------------------------------------------------------------------------------
+-- Tree-sitter
+----------------------------------------------------------------------------------
+vim.treesitter.language.register("bash", "sh")
+vim.treesitter.language.register("tsx", "typescriptreact")
+vim.treesitter.language.register("javascript", "javascriptreact")
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
+    callback = function(args)
+        local ft = vim.bo[args.buf].filetype
+        local lang = vim.treesitter.language.get_lang(ft)
+
+        if lang and vim.treesitter.language.add(lang) then
+            vim.treesitter.start(args.buf, lang)
+        end
+    end,
 })
 
 ----------------------------------------------------------------------------------
