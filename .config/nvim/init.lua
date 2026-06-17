@@ -33,6 +33,8 @@ vim.api.nvim_create_autocmd('TermOpen', {
     end,
 })
 
+vim.cmd.colorscheme "kanagawa"
+
 ----------------------------------------------------------------------------------
 -- Keybinds
 ----------------------------------------------------------------------------------
@@ -65,7 +67,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
 vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
 
-
 ----------------------------------------------------------------------------------
 -- Plugins
 ----------------------------------------------------------------------------------
@@ -77,9 +78,7 @@ vim.pack.add({
     "https://github.com/nvim-mini/mini.icons",
     "https://github.com/nvim-mini/mini.pick",
     "https://github.com/stevearc/oil.nvim",
-    "https://github.com/rafamadriz/friendly-snippets",
     { src = "https://github.com/Saghen/blink.cmp", version = vim.version.range("1") },
-    "https://github.com/OXY2DEV/markview.nvim",
     "https://github.com/dgagn/diagflow.nvim",
     "https://github.com/folke/snacks.nvim",
     "https://github.com/folke/zen-mode.nvim",
@@ -88,11 +87,9 @@ vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
 }, { load = true, confirm = false })
 
-vim.cmd.colorscheme "kanagawa"
-
 require("mini.icons").setup()
 require("mini.pick").setup()
-require("oil").setup({})
+require("oil").setup()
 
 require("blink.cmp").setup({
     signature = { enabled = true },
@@ -122,16 +119,7 @@ vim.diagnostic.config({
     }
 })
 
-require("snacks").setup({
-    indent = {
-        enabled = true,
-        filter = function(buf)
-            local excluded_ft = { "racket" }
-            return not vim.tbl_contains(excluded_ft, vim.bo[buf].filetype)
-            and vim.bo[buf].buftype == ""
-        end,
-    }
-})
+require("snacks").setup({ indent = { enabled = true, } })
 
 ----------------------------------------------------------------------------------
 -- Tree-sitter

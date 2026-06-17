@@ -9,14 +9,6 @@
       "rev": "b13321b517ff64bf42eeac2214085d3c76d83a0d",
       "src": "https://github.com/dgagn/diagflow.nvim"
     },
-    "friendly-snippets": {
-      "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
-      "src": "https://github.com/rafamadriz/friendly-snippets"
-    },
-    "markview.nvim": {
-      "rev": "3d8f68812262b516d533acf603c2ecaf72f8edb5",
-      "src": "https://github.com/OXY2DEV/markview.nvim"
-    },
     "mini.icons": {
       "rev": "520995f1d75da0e4cc901ee95080b1ff2bc46b94",
       "src": "https://github.com/nvim-mini/mini.icons"
