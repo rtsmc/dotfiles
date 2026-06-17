@@ -5,14 +5,19 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    find_output=$(find ~/projects ~/.config -mindepth 1 -maxdepth 1 -type d ! -name ".*")
-    other_dirs="\n$HOME/.local/src"
-    other_dirs="$other_dirs\n$HOME/.local/bin"
-    other_dirs="$other_dirs\n$(ls -d $HOME/projects/cs304/Homework/*)"
-    other_dirs="$other_dirs\n$(ls -d $HOME/projects/cs304/ClassMaterials/*)"
-    other_dirs="$other_dirs\n$(ls -d $HOME/projects/cs304/Sample_Exams/*)"
+    candidates=()
+    for dir in "$HOME/projects" "$HOME/.config"; do
+        [[ -d $dir ]] || continue
+        while IFS= read -r path; do
+            candidates+=("$path")
+        done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d ! -name ".*")
+    done
 
-    selected=$(printf "$find_output $other_dirs" | fzf)
+    for dir in "$HOME/.local/src" "$HOME/.local/bin"; do
+        [[ -d $dir ]] && candidates+=("$dir")
+    done
+
+    selected=$(printf '%s\n' "${candidates[@]}" | fzf)
 fi
 
 if [[ -z $selected ]]; then

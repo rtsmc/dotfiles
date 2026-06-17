@@ -70,6 +70,6 @@ PROMPT='%F{blue}%(4~|%-1~/…/%2~|%4~)%f$(git_prompt_info) %(?.%F{green}.%F{red}
 source <(fzf --zsh)
 
 # bun completions
-[ -s "/home/ryan/.bun/_bun" ] && source "/home/ryan/.bun/_bun"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
 . "$HOME/.local/share/../bin/env"
