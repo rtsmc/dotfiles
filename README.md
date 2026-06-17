@@ -10,9 +10,3 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 dotfiles checkout
 dotfiles config --local status.showUntrackedFiles no
 ```
-
-Tracked config covers Sway, Waybar, Ghostty, tmux, zsh, Neovim, rofi, dunst,
-fontconfig, keyd, and a few local helper scripts.
-
-Secrets, credentials, shell history, and machine-local state should stay out of
-this repository.
