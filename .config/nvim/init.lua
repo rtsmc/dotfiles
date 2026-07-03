@@ -122,25 +122,6 @@ vim.diagnostic.config({
 require("snacks").setup({ indent = { enabled = true, } })
 
 ----------------------------------------------------------------------------------
--- Tree-sitter
-----------------------------------------------------------------------------------
-vim.treesitter.language.register("bash", "sh")
-vim.treesitter.language.register("tsx", "typescriptreact")
-vim.treesitter.language.register("javascript", "javascriptreact")
-
-vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
-    callback = function(args)
-        local ft = vim.bo[args.buf].filetype
-        local lang = vim.treesitter.language.get_lang(ft)
-
-        if lang and vim.treesitter.language.add(lang) then
-            vim.treesitter.start(args.buf, lang)
-        end
-    end,
-})
-
-----------------------------------------------------------------------------------
 -- nvim-dap configuration
 ----------------------------------------------------------------------------------
 local dap = require("dap")
