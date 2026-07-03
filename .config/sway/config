@@ -15,7 +15,7 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term ghostty
-set $browser brave
+set $browser brave-origin-nightly
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -153,7 +153,7 @@ for_window [window_role="dialog"] floating enable
     # Start browser
     bindsym Mod1+b exec --no-startup-id $HOME/.local/bin/bookmarks
     bindsym $mod+BackSpace exec $HOME/.local/bin/sysact
-    bindsym Mod1+w exec --no-startup-id pgrep 'brave' && swaymsg '[app_id="brave-browser"] focus' || $browser
+    bindsym Mod1+w exec --no-startup-id pgrep 'brave' && swaymsg '[app_id="brave-origin-nightly"] focus' || $browser
     bindsym Mod1+s exec --no-startup-id pgrep 'spotify' && swaymsg '[app_id="spotify"] focus' || spotify-launcher
     bindsym Mod1+a exec --no-startup-id pgrep 'ghostty' && swaymsg '[app_id="ghostty"] focus' || ghostty
     bindsym Mod1+e exec --no-startup-id pgrep 'thunar' && swaymsg '[app_id="thunar"] focus' || thunar
