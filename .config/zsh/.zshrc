@@ -66,10 +66,14 @@ git_prompt_info() {
 setopt PROMPT_SUBST
 dir=''
 PROMPT='%F{blue}%(4~|%-1~/…/%2~|%4~)%f$(git_prompt_info) %(?.%F{green}.%F{red})%#%f '
+if [[ -n "$CONTAINER_NAME" || -n "$CONTAINER_ID" ]]; then
+    distrobox_name="${CONTAINER_NAME:-$CONTAINER_ID}"
+    PROMPT="[%F{cyan}${distrobox_name}%f] $PROMPT"
+fi
 
-source <(fzf --zsh)
-
-# bun completions
-[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
-
-. "$HOME/.local/share/../bin/env"
+if command -v fzf &> /dev/null; then
+    source <(fzf --zsh)
+fi
+if command -v mise &> /dev/null; then
+    eval "$(mise activate zsh)"
+fi
