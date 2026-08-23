@@ -13,7 +13,8 @@ vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 -- other
-vim.o.wrap = false vim.o.hlsearch = false
+vim.o.wrap = false
+vim.o.hlsearch = false
 vim.o.incsearch = true
 vim.o.scrolloff = 8
 vim.o.clipboard = "unnamedplus"
@@ -32,8 +33,6 @@ vim.api.nvim_create_autocmd('TermOpen', {
         vim.o.relativenumber = false
     end,
 })
-
-vim.cmd.colorscheme "kanagawa"
 
 ----------------------------------------------------------------------------------
 -- Keybinds
@@ -63,10 +62,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
--- mini pick keybinds
-vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
-vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
-
 ----------------------------------------------------------------------------------
 -- Plugins
 ----------------------------------------------------------------------------------
@@ -75,20 +70,20 @@ vim.g.vimtex_view_method = "zathura_simple"
 vim.g.vimtex_compiler_method = "tectonic"
 
 vim.pack.add({
-    "https://github.com/nvim-mini/mini.icons",
-    "https://github.com/nvim-mini/mini.pick",
     "https://github.com/stevearc/oil.nvim",
+    "https://github.com/nvim-mini/mini.icons",
     { src = "https://github.com/Saghen/blink.cmp", version = vim.version.range("1") },
     "https://github.com/dgagn/diagflow.nvim",
-    "https://github.com/folke/snacks.nvim",
-    "https://github.com/folke/zen-mode.nvim",
     "https://github.com/lervag/vimtex",
-    "https://github.com/mfussenegger/nvim-dap",
     "https://github.com/neovim/nvim-lspconfig",
+    "https://github.com/sainnhe/edge",
+    "https://github.com/vague-theme/vague.nvim",
+    "https://github.com/nanotech/jellybeans.vim",
+    "https://github.com/rebelot/kanagawa.nvim",
+    "https://github.com/catppuccin/nvim",
 }, { load = true, confirm = false })
 
 require("mini.icons").setup()
-require("mini.pick").setup()
 require("oil").setup()
 
 require("blink.cmp").setup({
@@ -119,36 +114,28 @@ vim.diagnostic.config({
     }
 })
 
-require("snacks").setup({ indent = { enabled = true, } })
-
 ----------------------------------------------------------------------------------
--- nvim-dap configuration
+-- Colors
 ----------------------------------------------------------------------------------
-local dap = require("dap")
-dap.adapters.gdb = {
-    type = "executable",
-    command = "gdb",
-    args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
-}
 
-dap.configurations.c = {
-    {
-        name = "Launch",
-        type = "gdb",
-        request = "launch",
-        program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        args = {}, -- provide arguments if needed
-        cwd = "${workspaceFolder}",
-        stopAtBeginningOfMainSubprogram = false,
-    },
-}
+vim.g.edge_style = "default"
+vim.g.edge_better_performance = 1
+
+vim.cmd.colorscheme "edge"
 
 ----------------------------------------------------------------------------------
 -- Langugae Servers
 ----------------------------------------------------------------------------------
-vim.lsp.enable({ "lua_ls", "clangd", "basedpyright", "ruff", "racket_langserver", "vtsls", "rust_analyzer" })
+vim.lsp.enable({
+    "lua_ls",
+    "clangd",
+    "basedpyright",
+    "ruff",
+    "racket_langserver",
+    "vtsls",
+    "rust_analyzer",
+    "mojo"
+})
 
 vim.lsp.config("basedpyright", {
     settings = {
