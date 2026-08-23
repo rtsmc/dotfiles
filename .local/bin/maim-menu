@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# This is bound to Shift+mod+s by default, requires maim. It lets you
+# choose the kind of screenshot to take, including copying the image or even
+# highlighting an area to copy.
+
+# variables
+output="$(date '+%y%m%d-%H%M-%S').png"
+
+case "$(printf "a selected area (copy)\\na selected area\\nfull screen\\nfull screen (copy)\\ncopy selected image to text" | dmenu -i -p "Screenshot which area?")" in
+    "a selected area (copy)") maim -s | xclip -selection clipboard -t image/png ;;
+    "a selected area") maim -s pic-selected-"${output}" ;;
+    "full screen") maim pic-full-"${output}" ;;
+    "full screen (copy)") maim | xclip -selection clipboard -t image/png ;;
+    "copy selected image to text") tmpfile=$(mktemp /tmp/ocr-XXXXXX.png) && maim -s "$tmpfile" && tesseract "$tmpfile" - -l eng | xclip -selection clipboard && rm "$tmpfile" ;;
+esac

@@ -1,0 +1,11 @@
+#!/bin/sh
+set -u
+
+criteria="$1"
+shift
+
+if i3-msg "$criteria focus" >/dev/null 2>&1; then
+    exit 0
+fi
+
+exec "$@"

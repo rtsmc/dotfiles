@@ -5,7 +5,7 @@
 # This file parses that format and passes each bookmark to rofi
 # for picking out and opening a bookmark.
 
-bookmarks_file="$HOME/Documents/bookmarks.md"
+bookmarks_file="$HOME/Documents/notes/bookmarks.md"
 
 labels=()
 urls=()
@@ -28,7 +28,7 @@ for i in "${!labels[@]}"; do
 done
 
 # Show menu in rofi; disable icons for speed
-choice=$(printf '%s' "$menu" | rofi -dmenu -no-show-icons -i -p "Bookmarks")
+choice=$(printf '%s' "$menu" | dmenu -i -p "Bookmarks")
 [[ -z "$choice" ]] && exit 0
 
 index=${choice%%:*}
