@@ -1,6 +1,6 @@
 # dotfiles
 
-dotfiles for my laptop linux setup, which is based on Arch Linux and the Sway window manager.
+dotfiles for my laptop linux setup, which is based on Debian and i3.
 
 This repo is managed as a bare git repo:
 
