@@ -44,6 +44,11 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
 vim.keymap.set("n", '<leader>qf', vim.diagnostic.setqflist)
 
+vim.keymap.set("n", "<leader><space>", function() Snacks.picker.smart() end, { desc = "Smart Find Files" })
+vim.keymap.set("n", "<leader>r", function() Snacks.picker.files({ hidden = true }) end, { desc = "Find Files" })
+vim.keymap.set("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Grep" })
+
 -- small terminal
 vim.keymap.set("n", "<space>st", function ()
     vim.cmd.vnew()
@@ -76,15 +81,15 @@ vim.pack.add({
     "https://github.com/dgagn/diagflow.nvim",
     "https://github.com/lervag/vimtex",
     "https://github.com/neovim/nvim-lspconfig",
+    "https://github.com/folke/snacks.nvim",
     "https://github.com/sainnhe/edge",
-    "https://github.com/vague-theme/vague.nvim",
-    "https://github.com/nanotech/jellybeans.vim",
-    "https://github.com/rebelot/kanagawa.nvim",
-    "https://github.com/catppuccin/nvim",
 }, { load = true, confirm = false })
 
 require("mini.icons").setup()
 require("oil").setup()
+require("snacks").setup({
+    picker = { enabled = true },
+})
 
 require("blink.cmp").setup({
     signature = { enabled = true },
