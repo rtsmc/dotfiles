@@ -6,7 +6,7 @@ if [[ $# -eq 1 ]]; then
     selected=$1
 else
     candidates=()
-    for dir in "$HOME/projects" "$HOME/.config"; do
+    for dir in "$HOME/projects" "$HOME/.config" "$HOME/Documents/notes/learning"; do
         [[ -d $dir ]] || continue
         while IFS= read -r path; do
             candidates+=("$path")
